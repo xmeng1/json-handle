@@ -27,3 +27,7 @@ outputs:
 runs:
   using: 'node16'
   main: 'dist/index.js'
+  
+branding:
+  icon: 'code'
+  color: 'green'
