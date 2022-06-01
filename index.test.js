@@ -18,7 +18,13 @@ test('wait 500 ms', async () => {
 // shows how the runner will run a javascript action with env / stdout protocol
 test('test runs', () => {
   process.env['INPUT_MILLISECONDS'] = 100;
+  process.env['INPUT_FILE'] = 'test-data/default.json';
+  process.env['INPUT_FIELD'] = 'androidBundleVersionCode';
+  process.env['INPUT_VALUE'] = 8;
+  process.env['INPUT_TYPE'] = 'int';
   const ip = path.join(__dirname, 'index.js');
   const result = cp.execSync(`node ${ip}`, {env: process.env}).toString();
   console.log(result);
+
+
 })

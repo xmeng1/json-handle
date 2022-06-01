@@ -1555,6 +1555,42 @@ exports.debug = debug; // for test
 
 /***/ }),
 
+/***/ 252:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const core = __nccwpck_require__(186);
+const fs = __nccwpck_require__(747);
+
+let updateJsonField = function updateJsonField(file, field, value) {
+  try {
+    let data = fs.readFileSync(file, 'utf8');
+    let obj = JSON.parse(data);
+    let root = obj;
+
+    let parts = field.split(".");
+    parts.forEach((part, index) => {
+      let isLastItem = index === parts.length - 1;
+      if (isLastItem) {
+        obj[part] = value;
+      } else {
+        obj[part] = obj[part] || {}
+        obj = obj[part];
+      }
+    });
+
+    data = JSON.stringify(root, null, 2);
+    fs.writeFileSync(file, data, 'utf8');
+  } catch (error) {
+    core.setFailed(error.message);
+    throw error;
+  }
+
+}
+module.exports = updateJsonField;
+
+
+/***/ }),
+
 /***/ 258:
 /***/ ((module) => {
 
@@ -1695,6 +1731,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(186);
 const wait = __nccwpck_require__(258);
+const updateJsonField = __nccwpck_require__(252);
 
 
 // most @actions toolkit packages have async methods
@@ -1708,6 +1745,34 @@ async function run() {
     core.info((new Date()).toTimeString());
 
     core.setOutput('time', new Date().toTimeString());
+
+
+    let file = core.getInput('file', {required: true});
+    let field = core.getInput('field', {required: true});
+    let value = core.getInput('value', {required: true});
+    let type = core.getInput('type', {required: false});
+    if (type) {
+      switch (type) {
+        case "int":
+          value = parseInt(value)
+          break;
+        case "float":
+          value = parseFloat(value)
+          break;
+        case "bool":
+          value = (value === 'true')
+          break;
+        default:
+          break;
+      }
+    }
+
+    let parseJson = !!core.getInput('parse_json', {required: false});
+    if (parseJson) {
+      value = JSON.parse(value)
+    }
+    updateJsonField(file, field, value)
+
   } catch (error) {
     core.setFailed(error.message);
   }
