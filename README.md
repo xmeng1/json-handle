@@ -1,4 +1,11 @@
-# Create a JavaScript Action
+# JSON handle Action
+
+This action is used to handle JSON file in the github action
+
+1. read data from json
+2. update the json
+
+
 
 <p align="center">
   <a href="https://github.com/actions/javascript-action/actions"><img alt="javscript-action status" src="https://github.com/actions/javascript-action/workflows/units-test/badge.svg"></a>
