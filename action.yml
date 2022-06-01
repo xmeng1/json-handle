@@ -1,10 +1,26 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'JSON Handle'
+description: 'Handle JSON file in action'
 inputs:
   milliseconds:  # id of input
     description: 'number of milliseconds to wait'
     required: true
-    default: '1000'
+    default: '100'
+  file:  # id of input
+    description: 'json file path'
+    required: true
+    default: ''
+  field:  # id of input
+    description: 'json key'
+    required: true
+    default: ''
+  value:  # id of input
+    description: 'value to be filled'
+    required: true
+    default: ''
+  type:  # id of input
+    description: 'parse type: int, float, bool, if not set, will use string'
+    required: false
+    default: ''
 outputs:
   time: # output will be available to future steps
     description: 'The current time after waiting'
