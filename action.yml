@@ -1,4 +1,4 @@
-name: 'JSON Handle'
+name: 'JSON Handle New'
 description: 'Handle JSON file in action'
 inputs:
   milliseconds:  # id of input
